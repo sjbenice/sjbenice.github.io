@@ -1362,6 +1362,8 @@ gap: 0.5rem;
 <div class="contact-container">
 <h2><i class="fas fa-handshake"></i> Let's Create Something Amazing</h2>
 <p>I'm currently available for new playable ad projects and game development opportunities. Let's collaborate to create experiences that drive real business results.</p>
+
+<!-- MAILTO FORM: No backend needed -->
 <form class="contact-form" id="contactForm">
 <div class="form-grid">
 <div class="form-group">
@@ -1379,6 +1381,12 @@ gap: 0.5rem;
 </div>
 <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Send Message</button>
 </form>
+
+<!-- Direct mailto fallback link -->
+<a href="mailto:steven.jackson.1987720@gmail.com?subject=Portfolio%20Inquiry" class="email-link">
+<i class="fas fa-envelope-open-text"></i> Or click here to email me directly
+</a>
+
 </div>
 </div>
 </section>
@@ -1427,24 +1435,7 @@ gap: 0.5rem;
 <script>
 // Set current year in footer
 document.getElementById('year').textContent = new Date().getFullYear();
-/*
-// Visit Counter using CountAPI
-document.addEventListener('DOMContentLoaded', function() {
-    const namespace = 'steven_portfolio_2026'; // Unique identifier for your site
-    const key = 'total_visits';
-    
-    // Fetch current count
-    fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/incr`)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('visitCount').textContent = data.value.toLocaleString();
-        })
-        .catch(error => {
-            console.error('Visit counter error:', error);
-            document.getElementById('visitCount').textContent = '---';
-        });
-});
-*/
+
 // Banner video rotation with sequential playback and content changes
 const bannerVideo = document.getElementById('bannerVideo');
 const bannerDots = document.querySelectorAll('.banner-dot');
@@ -1621,23 +1612,32 @@ iframe.contentWindow?.focus();
 iframe.src = url;
 });
 });
-// Contact form handling
+// ==========================================
+// CONTACT FORM -> MAILTO (No Backend)
+// ==========================================
 const contactForm = document.getElementById('contactForm');
 contactForm.addEventListener('submit', (e) => {
 e.preventDefault();
-const name = document.getElementById('name').value;
-const email = document.getElementById('email').value;
-const message = document.getElementById('message').value;
-// Create mailto link with pre-filled content
+
+const name = document.getElementById('name').value.trim();
+const email = document.getElementById('email').value.trim();
+const message = document.getElementById('message').value.trim();
+
+if (!name || !email || !message) {
+    alert('Please fill in all fields.');
+    return;
+}
+
+// Build mailto link with properly encoded content
 const subject = `Portfolio Inquiry from ${name}`;
-const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0AMessage: ${message}`;
+const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
 const mailtoLink = `mailto:steven.jackson.1987720@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-// Open email client
+
+// Open user's default email client
 window.location.href = mailtoLink;
+
 // Reset form
 contactForm.reset();
-// Show success message
-alert('Message sent successfully! I\'ll get back to you soon.');
 });
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
